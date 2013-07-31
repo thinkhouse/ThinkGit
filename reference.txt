@@ -1,0 +1,119 @@
+Starting Off:
+
+cd to your project root directory
+git init //creates local repo in root directory
+rm -rf .git //deletes .git from root directory should you need to start over
+
+git config --global user.name "your name" //declares username in commit history
+git config --global user.email "your@email.com" //declares email in commit history
+
+
+Connect to remote repo:
+
+git remote add origin "git@github.com:username/reponame" //create repo on your Github account, include README file to give project description
+git remote rm origin //deletes invalid remote repo
+
+Staging files:
+
+git add * //adds all files from root directory to stage
+git add . //adds all files excluding this specified in .gitignore to stage
+git add 'filepath' //adds specified file to stage
+
+
+Commiting changes to HEAD:
+
+git commit -a -m "message" 
+//adds all files from stage to local repo HEAD
+//-a is used to add all staged files to HEAD
+//-m is used to declare message
+//if no message declared Vim is automatically opened for inclusion of a longer description, exit using ESC:wq
+
+
+Align local and remote: (N.B pull = fetch + merge)
+
+git pull origin master //always pull before your first push, need to add README to your local repo
+git push origin master //updates remote repo with local commits
+
+
+Check your currents status:
+
+git status //returns current status of your working branch on local repo
+git log //returns full history with full guids
+git log -p //returns full history with shortened guids
+git log --oneline --all //returns summarised history with oneline entries
+git diff //returns difference between local repo and working set
+git diff 'guid' //returns difference between local repo and working set at a specific guid
+git ls-files //lists all files being tracked
+git ls-tree --name-only -r HEAD //lists most recent commit
+git ls-tree --name-only -r guid //lists specified commit details
+git remote show origin //lists SSH, remote & local branches
+
+
+Branching Out: 
+
+git branch //lists existing branches
+git branch branchname //creates a new branch called branchname
+git checkout branchname //switch to branchname branch
+git push -u origin newbranchname //creates & pushes new branch to remote, -u tells git you want to push/pull from this branch in future
+
+
+Reverse Integration:
+
+git checkout master //switch to master branch
+git merge branchname //merge changes from branchname into master
+
+
+Forward Integration
+
+git checkout branchname //switch to branchname branch
+git merge master //merge changes from master into branchname
+
+
+Stashing Current Changes:
+
+git stash
+//saves any local changes in working tree on the side before pull/merge
+
+git stash apply
+//applies changes stored in stash to current working tree
+
+git stash pop
+//
+
+
+Reverting to previous commits:
+
+git checkout -- filename 
+//changes working copy to last staged version
+//the use of -- is not necessary but used to distinguish from branches/tags of the same name if exists
+
+git checkout HEAD file 
+//changes working copy to latest commit version
+//note HEAD will alway ignore staging area and go straigh to commits
+
+git checkout guid filename
+//changes working copy to version of specified commit
+
+git checkout guid
+//goes back to specified commit in detached HEAD state
+
+git reset --hard guid
+//goes to specified commit in attached HEAD state
+//NB - deltes all uncommited changes! If unsure, perform git status to check if changes need commiting before use!
+
+git reset --soft HEAD^
+//rolls back current HEAD one commit leaving working tree in current state
+
+If you need to get back to a previous commit and would like to avoid detached HEAD state
+git reset guid //goes back to specified guid
+git reset --soft HEAD@{1} //moves pointer to previous HEAD
+git commit -a -m "message" //commit changes
+git reset --hard //updates working copy to reflect new changes
+
+If you cannot complete a merge due to local changes that will overwrite the file (can occur with compass_log_text)
+git reset 'filename' //undo changes in specified file
+git merge branchname //merge branch
+
+
+
+
